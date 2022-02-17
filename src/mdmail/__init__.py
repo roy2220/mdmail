@@ -39,7 +39,7 @@ class _Args:
     content_file_path: str
     smtp_host_name: str
     smtp_port_number: int
-    smtp_user_name: typing.Optional[str]
+    smtp_user_name: str
     smtp_password: typing.Optional[str]
     attachment_file_path: typing.Optional[str]
 
@@ -102,16 +102,29 @@ def _get_args() -> _Args:
         "-a", "--attachment-file", metavar="FILE", help="specify the attachment file"
     )
     raw_args = arg_parser.parse_args(sys.argv[1:])
+    sender_address = raw_args.sender[0]
+    recipient_addresses = raw_args.recipients[0].split(",")
+    subject = raw_args.subject[0]
+    content_file_path = raw_args.content_file[0]
+    if content_file_path == "-":
+        content_file_path = "/dev/stdin"
+    smtp_host_name = raw_args.smtp_host
+    smtp_port_number = int(raw_args.smtp_port)
+    smtp_user_name = raw_args.smtp_user
+    if smtp_user_name is None:
+        smtp_user_name = sender_address
+    smtp_password = raw_args.smtp_pass
+    attachment_file_path = raw_args.attachment_file
     args = _Args(
-        sender_address=raw_args.sender[0],
-        recipient_addresses=raw_args.recipients[0].split(","),
-        subject=raw_args.subject[0],
-        content_file_path=raw_args.content_file[0],
-        smtp_host_name=raw_args.smtp_host,
-        smtp_port_number=int(raw_args.smtp_port),
-        smtp_user_name=raw_args.smtp_user,
-        smtp_password=raw_args.smtp_pass,
-        attachment_file_path=raw_args.attachment_file,
+        sender_address=sender_address,
+        recipient_addresses=recipient_addresses,
+        subject=subject,
+        content_file_path=content_file_path,
+        smtp_host_name=smtp_host_name,
+        smtp_port_number=smtp_port_number,
+        smtp_user_name=smtp_user_name,
+        smtp_password=smtp_password,
+        attachment_file_path=attachment_file_path,
     )
     return args
 
@@ -183,12 +196,12 @@ def _markdown_2_html(markdown1: str) -> str:
 def _send_mail(
     smtp_host_name: str,
     smtp_port_number: int,
-    smtp_user_name: typing.Optional[str],
+    smtp_user_name: str,
     smtp_password: typing.Optional[str],
     mail: Message,
 ) -> None:
     smtp = smtplib.SMTP_SSL(smtp_host_name, smtp_port_number)
-    if smtp_user_name is not None and smtp_password is not None:
+    if smtp_password is not None:
         smtp.ehlo()
         smtp.login(smtp_user_name, smtp_password)
     smtp.ehlo()
