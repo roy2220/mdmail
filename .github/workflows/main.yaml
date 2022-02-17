@@ -1,0 +1,21 @@
+name: main
+defaults:
+  run:
+    shell: bash
+on:
+  push:
+    tags:
+    - v*
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo "tag=${GITHUB_REF#refs/tags/}" >>"${GITHUB_ENV}"
+    - run: echo 'image=roy2220/mdmail:${{ env.tag }}' >>"${GITHUB_ENV}"
+    - uses: actions/checkout@v2
+    - run: docker build --tag='${{ env.image }}' .
+    - uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+    - run: docker push '${{ env.image }}'
