@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name="mdmail",
-    version="0.0.0",
+    version="0.1.0",
     description="",
     packages=["mdmail"],
     package_dir={"mdmail": "src/mdmail"},
