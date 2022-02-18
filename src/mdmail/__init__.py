@@ -57,7 +57,7 @@ def _get_args() -> _Args:
     arg_parser.add_argument(
         "recipients",
         metavar="TO",
-        help="the recipients of the mail",
+        help="the recipients of the mail (separated by commas)",
         nargs=1,
     )
     arg_parser.add_argument(
@@ -90,7 +90,7 @@ def _get_args() -> _Args:
         "-u",
         "--smtp-user",
         metavar="USER",
-        help="specify the user of smtp server",
+        help="specify the user of smtp server. if not specified, the sender will be used instead",
     )
     arg_parser.add_argument(
         "-P",
