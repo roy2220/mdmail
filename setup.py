@@ -8,7 +8,7 @@ setup(
     package_dir={"mdmail": "src/mdmail"},
     package_data={
         "mdmail": [
-            "github-markdown.css",
+            "github-markdown-css/github-markdown.css",
         ]
     },
     entry_points={

@@ -160,7 +160,11 @@ def _make_mail(
 
 
 def _markdown_2_html(markdown1: str) -> str:
-    with (importlib.resources.files("mdmail") / "github-markdown.css").open("r") as f:
+    with (
+        importlib.resources.files("mdmail")
+        / "github-markdown-css"
+        / "github-markdown.css"
+    ).open("r") as f:
         css = f.read()
     html_body = markdown.markdown(markdown1, extensions=["tables"])
     html = """
