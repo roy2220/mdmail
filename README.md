@@ -5,7 +5,7 @@ A tool to send mails written in Markdown
 ## Example
 
 ```sh
-docker run --rm --interactive roy2220/mdmail \
+docker run --rm --interactive roy2220/mdmail:v0.1.0 \
     --smtp-host=smtp.mail.com \
     --smtp-port=465 \
     --smtp-pass=MY_PASSWORD \
