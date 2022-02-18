@@ -76,14 +76,14 @@ def _get_args() -> _Args:
         "-H",
         "--smtp-host",
         metavar="HOST",
-        help="specify the host of the smtp server",
+        help="specify the host of smtp server",
         default="127.0.0.1",
     )
     arg_parser.add_argument(
         "-p",
         "--smtp-port",
         metavar="PORT",
-        help="specify the port of the smtp server",
+        help="specify the port of smtp server",
         default="465",
     )
     arg_parser.add_argument(
