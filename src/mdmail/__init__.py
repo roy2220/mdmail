@@ -140,21 +140,22 @@ def _make_mail(
         markdown1 = f.read()
     html = _markdown_2_html(markdown1)
     mail = MIMEText(html, "html")
-    mail["From"] = sender_address
-    mail["To"] = ", ".join(recipient_addresses)
-    mail["Subject"] = subject
     if attachment_file_path is not None:
         mixed = MIMEMultipart("mixed")
         mixed.attach(mail)
         with open(attachment_file_path, "rb") as f:
             attachment = MIMEApplication(f.read(), "octet-stream")
+        attachment_file_name = os.path.basename(attachment_file_path)
         attachment.add_header(
             "Content-Disposition",
             "attachment",
-            filename=os.path.basename(attachment_file_path),
+            filename=attachment_file_name,
         )
         mixed.attach(attachment)
         mail = mixed
+    mail["From"] = sender_address
+    mail["To"] = ", ".join(recipient_addresses)
+    mail["Subject"] = subject
     return mail
 
 
