@@ -1,6 +1,6 @@
 # mdmail
 
-A tool to send mails written in Markdown
+A CLI tool to send mails written in Markdown
 
 ## Example
 
