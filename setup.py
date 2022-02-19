@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
     name="mdmail",
     version="0.2.2",
-    description="A tool to send mails written in Markdown",
+    description="A CLI tool to send mails written in Markdown",
     packages=["mdmail"],
     package_dir={"mdmail": "src/mdmail"},
     package_data={
