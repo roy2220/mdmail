@@ -166,7 +166,7 @@ def _markdown_2_html(markdown1: str) -> str:
         / "github-markdown.css"
     ).open("r") as f:
         css = f.read()
-    html_body = markdown.markdown(markdown1, extensions=["tables"])
+    html_body = markdown.markdown(markdown1, extensions=["tables", "fenced_code"])
     html = """
 <html>
 <head>
